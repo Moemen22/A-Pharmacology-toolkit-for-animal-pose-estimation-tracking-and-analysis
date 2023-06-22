@@ -5,7 +5,7 @@ import argparse
 import os
 import re
 import imutils
-from onedollar import TrajectoryClasification, TrajectoryClasificationStrategy, oneDollorRecognize
+from onedollar import TrajectoryClasification, TrajectoryClasificationStrategy, OneDollarRecognizer
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 import csv
@@ -28,7 +28,7 @@ for file in os.listdir():
     # old_switch = 0
     # flag_switch = 0
     alg_switch = -1
-    trajectory =[]
+
     skip_counter_blyl = 0
     skip_flag_blyl = 0
     skip_counter = 0
@@ -58,7 +58,7 @@ for file in os.listdir():
     confidence = None
     direction = None
     foot_count = 70
-    algorithm_switcher = TrajectoryClasification(oneDollorRecognize())
+    algorithm_switcher = TrajectoryClasification(OneDollarRecognizer())
     while (1):
 
         _, imageFrame = camera.read()
@@ -168,8 +168,6 @@ for file in os.listdir():
                                                cv2.RETR_TREE,
                                                cv2.CHAIN_APPROX_SIMPLE)
         for pic, contour in enumerate(contours):
-            trajectory.append(x,y)
-            print(x,y)
             area = cv2.contourArea(contour)
             if (area > 300):
                 x, y, w, h = cv2.boundingRect(contour)
